@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
+import DefaultStyle from '../globalConst/DefaultStyle';
 import CardView from '../components/CardView';
 import Colors from '../globalConst/colors';
 import InputField from '../components/inputField';
 import NumberContainer from '../components/NumberContainer';
+import GameButton from '../components/GameButton';
 
 const startGameScreen = props => {
     const [fieldValue, setFieldValue] = useState('');
@@ -36,9 +38,9 @@ const startGameScreen = props => {
     if (gameMode) {
         selectedNumberOutput =
             (<CardView style={styles.summaryContainer}>
-                <Text>Selected Number:</Text>
+                <Text style={DefaultStyle.bodyText}>Selected Number:</Text>
                 <NumberContainer>{number}</NumberContainer>
-                <Button title="Start" onPress={props.startGame.bind(this, number)} />
+                <GameButton onPress={props.startGame.bind(this, number)}>Start</GameButton>
             </CardView>);
     }
     return (
@@ -46,9 +48,9 @@ const startGameScreen = props => {
             Keyboard.dismiss();
         }}>
             <View style={styles.screen}>
-                <Text style={styles.title}>Start Game Screen</Text>
+                <Text style={{ ...DefaultStyle.titleText, ...styles.title }}>Start Game Screen</Text>
                 <CardView style={styles.input}>
-                    <Text>Select a number</Text>
+                    <Text style={DefaultStyle.bodyText}>Select a number (1-99)</Text>
                     <InputField
                         style={styles.inputField}
                         blurOnSubmit
@@ -83,8 +85,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 20,
-        marginVertical: 10
+        marginVertical: 10,
     },
     buttonLayout: {
         flexDirection: "row",

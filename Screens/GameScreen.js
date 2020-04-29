@@ -20,13 +20,16 @@ const gameScreen = props => {
     const [currentGuess, setCurrentGuess] = useState(genRandNumber(0, 100, props.userSelectedNumber));
     const currentHigh = useRef(100);
     const currentLow = useRef(1);
-    useEffect(()=>{
-        if(currentGuess===props.userSelectedNumber){
-            
-        }
-    });
+    const [currCount, setCurrCount] = useState(0);
+    const { userSelectedNumber, onOver } = props;
 
-    }
+    useEffect(() => {
+        if (currentGuess === userSelectedNumber) {
+            console.log('currCount' + currCount);
+            onOver(currCount);
+        }
+    }, [currentGuess, userSelectedNumber, onOver]);
+
     const nextGuesshandler = direction => {
         if ((direction === 'lower' && currentGuess < props.userSelectedNumber)
             || (direction === 'greater' && currentGuess > props.userSelectedNumber)) {
@@ -41,8 +44,9 @@ const gameScreen = props => {
         else {
             currentLow.current = currentGuess;
         }
-        const nextNum= genRandNumber(currentLow.current,currentHigh.current,currentGuess);
+        const nextNum = genRandNumber(currentLow.current, currentHigh.current, currentGuess);
         setCurrentGuess(nextNum);
+        setCurrCount(currCount => currCount + 1);
     };
     return (
         <View style={styles.screen}>

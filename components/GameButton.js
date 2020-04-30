@@ -1,19 +1,30 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, TouchableNativeFeedback } from 'react-native';
 
 import Colors from '../globalConst/colors';
 
 const gameButton = props => {
+    let ButtonComponent = TouchableOpacity;
+
+    if (Platform.OS === 'android' && Platform.Version > 20) {
+        ButtonComponent = TouchableNativeFeedback;
+    }
     return (
-        <TouchableOpacity onPress={props.onPress} activeOpacity={0.5}>
+        <View style={styles.buttonContainer}>
+        <ButtonComponent onPress={props.onPress} activeOpacity={0.5}>
             <View style={styles.button}>
                 <Text style={styles.title}>{props.children}</Text>
             </View>
-        </TouchableOpacity>
+        </ButtonComponent>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    buttonContainer:{
+        borderRadius: 25,
+        overflow: 'hidden'
+    },
     button: {
         backgroundColor: Colors.primary,
         paddingHorizontal: 30,

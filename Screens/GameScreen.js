@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, View, Text, Button, Alert, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, FlatList, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import DefaultStyle from '../globalConst/DefaultStyle';
@@ -32,11 +32,25 @@ const renderlist = (listLength, itemData) => {
 const gameScreen = props => {
     const firstGuess = genRandNumber(0, 100, props.userSelectedNumber);
     const [currentGuess, setCurrentGuess] = useState(firstGuess);
+    const [pastGuess, setPastGuess] = useState([firstGuess.toString()]);
+    const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width);
+    const [deviceHeight, setDeviceHeight] = useState(Dimensions.get('window').height);
+
     const currentHigh = useRef(100);
     const currentLow = useRef(1);
-    const [pastGuess, setPastGuess] = useState([firstGuess.toString()]);
-    const { userSelectedNumber, onOver } = props;
 
+    const { userSelectedNumber, onOver } = props;
+    useEffect(() => {
+        const updateDimensions = () => {
+            setDeviceHeight(Dimensions.get('window').height);
+            setDeviceWidth(Dimensions.get('window').width);
+        };
+        Dimensions.addEventListener('change', updateDimensions);
+
+        return () => {
+            Dimensions.removeEventListener('change', updateDimensions)
+        }
+    });
     useEffect(() => {
         if (currentGuess === userSelectedNumber) {
             onOver(pastGuess.length);
@@ -62,6 +76,29 @@ const gameScreen = props => {
         //setCurrCount(currCount => currCount + 1);
         setPastGuess(pastGuess => [nextNum.toString(), ...pastGuess]);
     };
+    if (deviceHeight < 500) {
+        return (
+            <View style={styles.screen}>
+                <Text style={DefaultStyle.bodyText}>Number Gussed:</Text>
+                <View style={styles.controls}>
+                    <GameButton onPress={nextGuesshandler.bind(this, 'lower')} >
+                        <FontAwesome name='minus' size={20} color='white' />
+                    </GameButton>
+                    <NumberContainer>{currentGuess}</NumberContainer>
+
+                    <GameButton onPress={nextGuesshandler.bind(this, 'greater')} >
+                        <FontAwesome name='plus' size={20} color='white' />
+                    </GameButton>
+                </View>
+                <View style={styles.listContainer}>
+                    <FlatList contentContainerStyle={styles.list}
+                        keyExtractor={item => item}
+                        data={pastGuess}
+                        renderItem={renderlist.bind(this, pastGuess.length)} />
+                </View>
+            </View>
+        );
+    }
     return (
         <View style={styles.screen}>
             <Text style={DefaultStyle.bodyText}>Number Gussed:</Text>
@@ -94,19 +131,25 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         marginTop: 10,
-        width: 400,
+        width: '90%',
         maxWidth: '90%'
     },
     listContainer: {
         flex: 1,
-        width: '80%'
-        
+        width: '60%'
+
+    },
+    controls: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '80%',
+        alignItems: 'center'
     },
     list: {
         flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        
+
     },
     listItem: {
         width: 150,

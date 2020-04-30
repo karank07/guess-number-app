@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
@@ -54,10 +54,10 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header title='Guess The Number' />
       {gameOutput}
-    </View>
+    </SafeAreaView>
   );
 }
 

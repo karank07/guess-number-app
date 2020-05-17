@@ -10,7 +10,6 @@ This project was created to practice basic concepts of building a React Native a
 * Adding and styling images
 * Adding icons
 * Exploring UI libraries- Native Base and React Native Elements
-* 
 
 ## App Preview
 

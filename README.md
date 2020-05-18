@@ -17,6 +17,17 @@ This project was created to practice basic concepts of building a React Native a
 * Using Safearea View
 
 ## App Preview
+<p>
+<img width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen1.png" >
+<img  width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen2.png">
+<img  width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen3.png">
+<img  width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen4.png">
+</p>
+<p>
+<img  width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen5.png">
+<img  width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen6.png">
+<img  width="210" height="420" src="https://github.com/karank07/guess-number-app/blob/master/preview/Screen7.png">
+</p>
 
 #
 
